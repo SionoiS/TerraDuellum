@@ -1,5 +1,6 @@
 package sionois.terraduellum.Items;
 
+import sionois.terraduellum.ModRef;
 import sionois.terraduellum.TDBlocks;
 import TFC.TFCBlocks;
 import TFC.API.Enums.EnumSize;
@@ -7,9 +8,11 @@ import TFC.API.Enums.EnumWeight;
 import TFC.Items.ItemTerra;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Icon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
@@ -21,6 +24,11 @@ public class ItemDoorSteel extends ItemTerra
 		this.maxStackSize = 1;
 		this.setCreativeTab(CreativeTabs.tabRedstone);
 		
+	}
+	@Override
+	public void registerIcons(IconRegister registerer)
+	{
+		this.itemIcon = registerer.registerIcon(ModRef.ModID + ":" + this.getUnlocalizedName().replace("item.", ""));
 	}
     /**
      * Callback for item usage. If the item does something special on right clicking, he will have one of those. Return

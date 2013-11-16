@@ -25,19 +25,16 @@ public class TDBlocks
 	public static void LoadBlocks()
 	{
 		dungeonBlock = new BlockDungeon(dungeonBlockID).setHardness(13F).setResistance(15F).setUnlocalizedName(dungeonBlockName);
-		
     	wroughtIronDoorBlock = new BlockWroughtIronDoor(wroughtIronDoorBlockID, Material.iron).setUnlocalizedName(TDItems.wroughtIronDoorName).setTextureName(ModRef.ModID + ":" + TDItems.wroughtIronDoorName);
     	steelDoorBlock = new BlockSteelDoor(steelDoorBlockID, Material.iron).setUnlocalizedName(TDItems.steelDoorName).setTextureName(ModRef.ModID + ":" + TDItems.steelDoorName);
     	
-    	MinecraftForge.setBlockHarvestLevel(TDBlocks.dungeonBlock, "pickaxe", 0);
-   	
+    	MinecraftForge.setBlockHarvestLevel(TDBlocks.dungeonBlock, "pickaxe", 2); 	
     	MinecraftForge.setBlockHarvestLevel(TDBlocks.wroughtIronDoorBlock, "pickaxe", 2);
     	MinecraftForge.setBlockHarvestLevel(TDBlocks.steelDoorBlock, "pickaxe", 3);
 	}
 	public static void RegisterBlocks()
 	{
 		GameRegistry.registerBlock(dungeonBlock, sionois.terraduellum.Items.ItemDungeon.class, dungeonBlockName);
-		
         GameRegistry.registerBlock(wroughtIronDoorBlock,"WroughtIronDoor");
         GameRegistry.registerBlock(steelDoorBlock, "SteelDoor");
 	}

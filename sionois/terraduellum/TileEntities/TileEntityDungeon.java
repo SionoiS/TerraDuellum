@@ -16,23 +16,23 @@ public class TileEntityDungeon extends TileEntity
     private int yBed;
     private int zBed;
     private ChunkCoordinates xyzBed;
-    private int tierModifier = this.blockMetadata + 1;
+    private int tierModifier = 1;
        
     public void updateEntity()
     {      
         if (this.worldObj.getTotalWorldTime() % 20L == 0L)
-        {       	
+        {    
             this.addEffectsToPlayers();
         }
     }
     private void addEffectsToPlayers()
-    {    	
+    {
         if (!this.worldObj.isRemote)
         {   
-        	System.out.println("this tier ? "+ (this.tierModifier));
-        	
-        	int prisonRange = (TerraDuellum.baseDungeonRange * tierModifier);
-        	int bedcheckRange = (-((TerraDuellum.baseDungeonRange - TerraDuellum.baseBedCheckRange) * tierModifier));
+        	this.tierModifier = this.getBlockMetadata() + 1;
+        	//System.out.println("this tier ? "+ this.tierModifier);
+        	int prisonRange = (TerraDuellum.baseDungeonRange * this.tierModifier);
+        	int bedcheckRange = (-((TerraDuellum.baseDungeonRange - TerraDuellum.baseBedCheckRange) * this.tierModifier));
         	//System.out.println("Dungeon Range ? "+ prisonRange);
         	//System.out.println("Bed Range ? "+ bedcheckRange);
         	

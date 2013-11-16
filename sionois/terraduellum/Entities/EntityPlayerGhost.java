@@ -43,13 +43,13 @@ public class EntityPlayerGhost extends EntityMob implements IRangedAttackMob, IC
 	private static final float arrowAttackRange = 20.0F;
 	private static final float watchRange = 20.0F;
 	
-	/** Projectile Speed**/
+	/**Projectile Speed*/
 	private static final float force = 1.6F;
-	/**Projectile Accuracy**/	
+	/**Projectile Accuracy*/	
 	private static final float forceVariation = 4.0F;
-	/**Mob speed**/
+	/**Mob speed*/
 	private static final double speed = 0.55D;
-	/**Mob Health**/
+	/**Mob Health*/
 	private static final float maxHealth = 1000;
 	
     private EntityAIArrowAttack aiArrowAttack = new EntityAIArrowAttack(this, 0.0D, 20, 60, this.arrowAttackRange);

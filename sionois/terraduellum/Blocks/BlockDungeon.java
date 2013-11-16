@@ -20,7 +20,7 @@ import TFC.Blocks.BlockTerra;
 
 public class BlockDungeon extends BlockTerra implements ITileEntityProvider
 {
-	private int dungeonCounter = 0;
+	private boolean dungeonOverlap;
 	public static final String[] dungeonNames = {"Brass","Sterling Silver", "Rose Gold", "Platinum"};
 	protected Icon[] icons = new Icon[dungeonNames.length];
 	
@@ -61,29 +61,36 @@ public class BlockDungeon extends BlockTerra implements ITileEntityProvider
     }
     public void onBlockAdded(World par1World, int par2, int par3, int par4)
     {  		
-        	int dungeonRange = (TerraDuellum.baseDungeonRange * 8);
+    	int dungeonCounter = 0;
+        int dungeonRange = (TerraDuellum.baseDungeonRange * 8);
         	
-        	for (int i = -(dungeonRange); i < (dungeonRange); i++)
+        for (int i = -(dungeonRange); i < (dungeonRange); i++)
+        {
+        	for (int j = -(dungeonRange); j < (dungeonRange); j++)
         	{
-        		for (int j = -(dungeonRange); j < (dungeonRange); j++)
+        		for (int k = -(dungeonRange); k < (dungeonRange); k++)
         		{
-        			for (int k = -(dungeonRange); k < (dungeonRange); k++)
-        			{
-        				int blockid = par1World.getBlockId(par2+i, par3+k, par4+j);
+        			int blockid = par1World.getBlockId(par2+i, par3+k, par4+j);
                     
-        				if(blockid == TDBlocks.dungeonBlockID)
-        				{
+        			if(blockid == TDBlocks.dungeonBlockID)
+        			{
         					dungeonCounter++;
-        				}
         			}
         		}
         	}
+        }
+        System.out.println("Dungeon Counter= "+ dungeonCounter);
+        if(dungeonCounter >= 2)
+        {
+        	this.dungeonOverlap = true;
+        }
+        else this.dungeonOverlap = false;
     }
 	public TileEntity createNewTileEntity(World par1World)
-    { 		
-        if (dungeonCounter >= 2)
+    { 			
+        if (this.dungeonOverlap)
         {  
-        	 return null;
+        	return null;
         }       
         else return new TileEntityDungeon();      	
     }
