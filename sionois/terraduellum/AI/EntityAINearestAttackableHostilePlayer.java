@@ -49,7 +49,7 @@ public class EntityAINearestAttackableHostilePlayer extends EntityAITarget
             else
             	
             this.targetEntity = (EntityPlayer)list.get(0);
-            String entityName = this.targetEntity.getEntityName();
+            String entityName = this.targetEntity.getEntityName().toLowerCase();
             EntityPlayerGhost entityplayerghost = (EntityPlayerGhost)this.taskOwner;
             
             if (entityplayerghost.friendlist != null && entityplayerghost.friendlist.contains(entityName))

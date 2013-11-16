@@ -10,10 +10,6 @@ import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import sionois.terraduellum.Blocks.BlockWroughtIronDoor;
 import sionois.terraduellum.Blocks.BlockSteelDoor;
-import sionois.terraduellum.Blocks.BlockBrassDungeon;
-import sionois.terraduellum.Blocks.BlockSterlingSilverDungeon;
-import sionois.terraduellum.Blocks.BlockRoseGoldDungeon;
-import sionois.terraduellum.Blocks.BlockPlatinumDungeon;
 import sionois.terraduellum.Commands.FriendsListCommand;
 import sionois.terraduellum.Commands.SetGhostOnOffCommand;
 import sionois.terraduellum.Entities.EntityPlayerGhost;
@@ -24,6 +20,7 @@ import TFC.TerraFirmaCraft;
 import TFC.API.Constant.TFCBlockID;
 import TFC.API.Constant.TFCItemID;
 import TFC.Core.Player.PlayerTracker;
+import TFC.Core.Util.Localization;
 import TFC.Handlers.AnvilCraftingHandler;
 import TFC.Handlers.ChunkDataEventHandler;
 import TFC.Handlers.ChunkEventHandler;
@@ -71,6 +68,8 @@ public class TerraDuellum
         @EventHandler
         public void load(FMLInitializationEvent event) 
         {
+        	Localization.addLocalization("/assets/terraduellum/lang/", "en_US");
+        	
         	GameRegistry.registerPlayerTracker(new TFC.Core.Player.PlayerTracker());
         	GameRegistry.registerPlayerTracker(new sionois.terraduellum.Tracker.GhostManager());
         	
@@ -104,18 +103,18 @@ public class TerraDuellum
     		System.out.println(new StringBuilder().append("[TD] Loading Config").toString());
     		
     		/**Blocks*/
-    		
-    		TDBlocks.brassDungeonBlockID = config.getBlock(TDBlocks.brassDungeonBlockName + " ID", 2120).getInt(2120);
-    		TDBlocks.sterlingSilverDungeonBlockID = config.getBlock(TDBlocks.sterlingSilverDungeonBlockName + " ID", 2121).getInt(2121);
-    		TDBlocks.roseGoldDungeonBlockID = config.getBlock(TDBlocks.roseGoldDungeonBlockName + " ID", 2122).getInt(2122);
-    		TDBlocks.platinumDungeonBlockID = config.getBlock(TDBlocks.platinumDungeonBlockName + " ID", 2123).getInt(2123);
+    		TDBlocks.dungeonBlockID = config.getBlock(TDBlocks.dungeonBlockName + " ID", 2120).getInt(2120);
 
-    		TDBlocks.wroughtIronDoorBlockID = config.getBlock(TDItems.wroughtIronDoorName + " Block ID", 2124).getInt(2124);
-    		TDBlocks.steelDoorBlockID = config.getBlock(TDItems.steelDoorName + " Block ID", 2125).getInt(2125);
+    		TDBlocks.wroughtIronDoorBlockID = config.getBlock(TDItems.wroughtIronDoorName + " ID", 2121).getInt(2121);
+    		TDBlocks.steelDoorBlockID = config.getBlock(TDItems.steelDoorName + " ID", 2122).getInt(2122);
+    		
+    		TDBlocks.stoneIgInBlockID = config.getBlock(TDBlocks.stoneIgInBlockName + " ID", 2123).getInt(2123);
+    		TDBlocks.stoneIgExBlockID = config.getBlock(TDBlocks.stoneIgExBlockName + " ID", 2124).getInt(2124);
+    		TDBlocks.stoneSedBlockID = config.getBlock(TDBlocks.stoneSedBlockName + " ID", 2125).getInt(2125);
+    		TDBlocks.stoneMMBlockID = config.getBlock(TDBlocks.stoneMMBlockName + " ID", 2126).getInt(2126);
     		
     		TDBlocks.LoadBlocks();
     		TDBlocks.RegisterBlocks();
-    		TDBlocks.NameBlocks();
     		
             /**Items*/ 
     		
@@ -123,7 +122,6 @@ public class TerraDuellum
             TDItems.steelDoorItemID = config.getItem(TDItems.steelDoorName + "ID", 30001).getInt(30001);
             TDItems.LoadItems();
             TDItems.RegisterItems();
-            TDItems.NameItems();
             
             /**Ranges*/
             
