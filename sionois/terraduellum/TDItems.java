@@ -27,9 +27,4 @@ public class TDItems
 		GameRegistry.registerItem(doorWroughtIron, "WroughtIronMetalDoor");
 		GameRegistry.registerItem(doorSteel, "SteelMetalDoor");
 	}
-	public static void NameItems()
-	{
-		LanguageRegistry.addName(doorWroughtIron, wroughtIronDoorName);
-		LanguageRegistry.addName(doorSteel, steelDoorName);	
-	}
 }

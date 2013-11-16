@@ -16,15 +16,12 @@ public class TileEntityDungeon extends TileEntity
     private int yBed;
     private int zBed;
     private ChunkCoordinates xyzBed;
-    private int tierModifier = 1;
-    
-    
+    private int tierModifier = this.blockMetadata + 1;
+       
     public void updateEntity()
     {      
         if (this.worldObj.getTotalWorldTime() % 20L == 0L)
-        {
-        	this.getTier();
-        	//System.out.println("this tier ? "+ (this.tierModifier-1));
+        {       	
             this.addEffectsToPlayers();
         }
     }
@@ -32,6 +29,8 @@ public class TileEntityDungeon extends TileEntity
     {    	
         if (!this.worldObj.isRemote)
         {   
+        	System.out.println("this tier ? "+ (this.tierModifier));
+        	
         	int prisonRange = (TerraDuellum.baseDungeonRange * tierModifier);
         	int bedcheckRange = (-((TerraDuellum.baseDungeonRange - TerraDuellum.baseBedCheckRange) * tierModifier));
         	//System.out.println("Dungeon Range ? "+ prisonRange);
@@ -72,26 +71,5 @@ public class TileEntityDungeon extends TileEntity
                 }
             }
         }
-    }
-    private void getTier()
-    {
-    	 int blockID = this.worldObj.getBlockId(this.xCoord,this.yCoord,this.zCoord);
-    	 
-    	 if(blockID == (TDBlocks.brassDungeonBlockID))
-    	 {
-    		 tierModifier = 1;
-    	 }
-    	 if(blockID == (TDBlocks.sterlingSilverDungeonBlockID))
-    	 {
-    		tierModifier = 2;
-    	 }
-    	 if(blockID == (TDBlocks.roseGoldDungeonBlockID))
-    	 {
-    		 tierModifier = 3;
-    	 }
-    	 if(blockID == (TDBlocks.platinumDungeonBlockID))
-    	 {
-    		 tierModifier = 4;
-    	 }
     }
 }
