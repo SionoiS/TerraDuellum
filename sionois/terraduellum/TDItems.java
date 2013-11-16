@@ -7,13 +7,15 @@ import sionois.terraduellum.Items.ItemDoorWroughtIron;
 import net.minecraft.item.Item;
 
 public class TDItems
-{	
+{	/**Items*/
 	public static Item doorWroughtIron;
 	public static Item doorSteel;
 	
+	/**IDs*/
 	public static int wroughtIronItemID;
     public static int steelDoorItemID;
-   
+    
+    /**Names*/
     public static String wroughtIronDoorName = "Wrought Iron Door";
     public static String steelDoorName = "Steel Door";
     

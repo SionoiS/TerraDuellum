@@ -105,8 +105,13 @@ public class TerraDuellum
     		/**Blocks*/
     		TDBlocks.dungeonBlockID = config.getBlock(TDBlocks.dungeonBlockName + " ID", 2120).getInt(2120);
 
-    		TDBlocks.wroughtIronDoorBlockID = config.getBlock(TDItems.wroughtIronDoorName + " Block ID", 2121).getInt(2121);
-    		TDBlocks.steelDoorBlockID = config.getBlock(TDItems.steelDoorName + " Block ID", 2122).getInt(2122);
+    		TDBlocks.wroughtIronDoorBlockID = config.getBlock(TDItems.wroughtIronDoorName + " ID", 2121).getInt(2121);
+    		TDBlocks.steelDoorBlockID = config.getBlock(TDItems.steelDoorName + " ID", 2122).getInt(2122);
+    		
+    		TDBlocks.stoneIgInBlockID = config.getBlock(TDBlocks.stoneIgInBlockName + " ID", 2123).getInt(2123);
+    		TDBlocks.stoneIgExBlockID = config.getBlock(TDBlocks.stoneIgExBlockName + " ID", 2124).getInt(2124);
+    		TDBlocks.stoneSedBlockID = config.getBlock(TDBlocks.stoneSedBlockName + " ID", 2125).getInt(2125);
+    		TDBlocks.stoneMMBlockID = config.getBlock(TDBlocks.stoneMMBlockName + " ID", 2126).getInt(2126);
     		
     		TDBlocks.LoadBlocks();
     		TDBlocks.RegisterBlocks();
