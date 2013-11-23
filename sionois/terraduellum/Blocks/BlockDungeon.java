@@ -79,7 +79,6 @@ public class BlockDungeon extends BlockTerra implements ITileEntityProvider
         		}
         	}
         }
-        System.out.println("Dungeon Counter= "+ dungeonCounter);
         if(dungeonCounter >= 2)
         {
         	this.dungeonOverlap = true;
