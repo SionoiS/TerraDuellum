@@ -29,7 +29,6 @@ public class SetGhostOnOffCommand extends CommandBase
     {
     	EntityPlayerMP entityplayermp = getCommandSenderAsPlayer(par1ICommandSender);
     	EnumGameType gametype = entityplayermp.theItemInWorldManager.getGameType();
-    	//System.out.println(gametype);
     	if(gametype == EnumGameType.SURVIVAL)
     	{
         return true;
