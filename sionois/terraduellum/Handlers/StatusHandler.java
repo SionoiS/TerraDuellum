@@ -23,7 +23,6 @@ public class StatusHandler {
 	{
 		if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer)
 		{
-			//System.out.println("onEntityjoinWorld");
 			Status.loadProxyData((EntityPlayer) event.entity);
 		}
 	}
@@ -32,7 +31,6 @@ public class StatusHandler {
 	{
 		if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer)
 		{
-			//System.out.println("onLivingDeathEvent");
 			Status.saveProxyData((EntityPlayer) event.entity);
 		}
 	}
