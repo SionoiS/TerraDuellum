@@ -43,10 +43,9 @@ public class Status implements IExtendedEntityProperties
 	}
 	public static void loadProxyData(EntityPlayer player) 
 	{
-		//System.out.println("loadProxyData");
 		Status playerData = Status.get(player);
 		NBTTagCompound savedData = CommonProxy.getEntityData(getSaveKey(player) + Status.EXT_PROP_NAME);
-		//System.out.println(savedData);
+		
 		if(savedData != null) 
 		{
 			playerData.loadNBTData(savedData);
@@ -57,29 +56,20 @@ public class Status implements IExtendedEntityProperties
 	@Override
 	public void loadNBTData(NBTTagCompound par1NBTTagCompound)
 	{
-			//System.out.println("Status read From NBT");
-			
 			NBTTagCompound status = par1NBTTagCompound.getCompoundTag(EXT_PROP_NAME);
 			this.ghoststatus = status.getInteger("GhostStatus");
-			//System.out.println("ghotstatus " + this.ghoststatus);
 			
 			int i = 0;
 			while(!(status.getString("Friend" + i).isEmpty()))
 			{
-				//System.out.println(i);
 				this.friendlist.add(status.getString("Friend" + i));
 				++i;
 			}
-			//System.out.println("Friend List " + this.friendlist);
 	}
 	@Override
 	public void saveNBTData(NBTTagCompound par1NBTTagCompound)
 	{
-		//System.out.println("Status write To NBT");
-		
 		NBTTagCompound status = new NBTTagCompound();
-				
-		//System.out.println("ghotstatus " + this.ghoststatus);
 		status.setInteger("GhostStatus", this.ghoststatus);
 		
 		if (this.friendlist != null && !this.friendlist.isEmpty())
@@ -87,26 +77,22 @@ public class Status implements IExtendedEntityProperties
 			Iterator iterator = this.friendlist.iterator();
 			int i = 0;
 			while(iterator.hasNext())
-			{
-				//System.out.println(i);				
+			{				
 				status.setString("Friend" + i, (String) this.friendlist.get(i));				
 				++i;
 				iterator.next();
 			}
 			
-			//System.out.println("Friend List " + this.friendlist);			
 			par1NBTTagCompound.setCompoundTag(EXT_PROP_NAME, status);				
 		}				
 	}
 	public void turnGhostOn(EntityPlayer player)
 	{
 		this.ghoststatus = 1;
-		//System.out.println("ghotstatus of " + player.username +" is " + this.ghoststatus);
 	}
 	public void turnGhostOff(EntityPlayer player)
 	{
 		this.ghoststatus = 0;
-		//System.out.println("ghotstatus of " + player.username +" is " + this.ghoststatus);
 	}
 	public boolean isGhostOn(EntityPlayer player)
 	{
