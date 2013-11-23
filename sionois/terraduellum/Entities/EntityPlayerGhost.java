@@ -66,8 +66,7 @@ public class EntityPlayerGhost extends EntityMob implements IRangedAttackMob, IC
         
     public EntityPlayerGhost(World par1World)
     {
-        super(par1World);
-        //System.out.println("AI"); 	    	
+        super(par1World);	    	
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(3, new EntityAIWatchClosest(this, EntityPlayer.class, this.watchRange));
         this.tasks.addTask(3, new EntityAILookIdle(this));
@@ -83,7 +82,6 @@ public class EntityPlayerGhost extends EntityMob implements IRangedAttackMob, IC
 	protected void applyEntityAttributes()
 	{
 		super.applyEntityAttributes();
-		//System.out.println("applyEntityAttributes");
 		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(this.maxHealth);
 		this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setAttribute(10.0F);
 		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(this.speed);
@@ -118,22 +116,19 @@ public class EntityPlayerGhost extends EntityMob implements IRangedAttackMob, IC
     }
 	public void setCombatTask()
 	{
-		//System.out.println("CombatAI");
 		this.tasks.removeTask(this.aiAttackOnCollide);
 		this.tasks.removeTask(this.aiArrowAttack);
 		this.tasks.removeTask(this.aiJavelinAttack);
-    	ItemStack itemstack = this.getHeldItem();
-    	//System.out.println(itemstack);
+    		ItemStack itemstack = this.getHeldItem();
+    		
 		if (itemstack != null)
 		{    
 			if(itemstack.itemID == Item.bow.itemID)
 			{
-				//System.out.println("aiArrowAttack");
 				this.tasks.addTask(2, this.aiArrowAttack);
 			}
 			if (itemstack.getItem() instanceof ItemJavelin)
 			{
-				//System.out.println("aiJavelinAttack");
 				this.tasks.addTask(2, this.aiJavelinAttack);
 			}
 			else this.tasks.addTask(2, this.aiAttackOnCollide);
@@ -144,26 +139,21 @@ public class EntityPlayerGhost extends EntityMob implements IRangedAttackMob, IC
     public EntityLivingData onSpawnWithEgg(EntityLivingData par1EntityLivingData)
     {
     	par1EntityLivingData = super.onSpawnWithEgg(par1EntityLivingData);
-    	//System.out.println("onSpawnWithEgg");
     	
     	this.spawner = GhostManager.playername;
     	this.setCustomNameTag(this.spawner);
     	this.setAlwaysRenderNameTag(true);
-    	//System.out.println("PlayerName = " + spawner);
     	
     	this.player = GhostManager.player;
     	
     	this.friendlist = GhostManager.friendlist;
-    	//System.out.println("Ghost Friend List = " + this.friendlist);
     	
     	this.addPlayerArmor();
     	
-   	    this.homeX = MathHelper.floor_double(this.player.posX);
+   	this.homeX = MathHelper.floor_double(this.player.posX);
     	this.homeY = MathHelper.floor_double(this.player.posY);
     	this.homeZ = MathHelper.floor_double(this.player.posZ);
     	this.setHomeArea(this.homeX, this.homeY, this.homeZ, 15);
-
-    	//System.out.println("setHomeArea to" + (int)player.posX + (int)player.posY + (int)player.posZ);
     	
     	return par1EntityLivingData;
     }
@@ -174,8 +164,6 @@ public class EntityPlayerGhost extends EntityMob implements IRangedAttackMob, IC
     	
     	if(this.aiTime == 20)
     	{
-    		//System.out.println("AI Tick");
-    		//System.out.println(this.homeX + this.homeY + this.homeZ);
     		this.setHomeArea(this.homeX, this.homeY, this.homeZ, 15);
     		this.tasks.addTask(1, new EntityAIMoveTowardsRestriction(this, this.speed + 0.1D));
     		this.setCombatTask();
@@ -187,13 +175,10 @@ public class EntityPlayerGhost extends EntityMob implements IRangedAttackMob, IC
         ++this.deathTime;
 
         if (this.deathTime == 600)
-        {   
-        	//System.out.println("Death Update");
+        {
         	this.setHealth(this.getMaxHealth());
-        	//System.out.println(this.getMaxHealth());
         	this.deathTime = 0;
         	
-        	//System.out.println("setLocation Home");
         	this.setLocationAndAngles(this.homeX, this.homeY, this.homeZ, MathHelper.wrapAngleTo180_float(worldObj.rand.nextFloat() * 360.0F), 0.0F);
     	    this.rotationYawHead = this.rotationYaw;
     	    this.renderYawOffset = this.rotationYaw;
@@ -203,7 +188,6 @@ public class EntityPlayerGhost extends EntityMob implements IRangedAttackMob, IC
     public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
     {   
         super.writeEntityToNBT(par1NBTTagCompound);
-        //System.out.println("writeEntityToNBT");
         par1NBTTagCompound.setString("Player", spawner);
         par1NBTTagCompound.setInteger("HomeXCoords", homeX);
         par1NBTTagCompound.setInteger("HomeYCoords", homeY);
@@ -214,20 +198,17 @@ public class EntityPlayerGhost extends EntityMob implements IRangedAttackMob, IC
 			Iterator iterator = friendlist.iterator();
 			int i = 0;
 			while(iterator.hasNext())
-			{	
-				//System.out.println(i);
+			{
 				par1NBTTagCompound.setString("Friend" + i, (String) this.friendlist.get(i));				
 				++i;
 				iterator.next();
 			}
-			//System.out.println("Friend " + this.friendlist);
 		}
     }
     @Override
 	public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
     {
 		super.readEntityFromNBT(par1NBTTagCompound);
-		//System.out.println("readEntityFromNBT");
 		
         if(par1NBTTagCompound.hasKey("Player"))
         {       	
@@ -249,11 +230,9 @@ public class EntityPlayerGhost extends EntityMob implements IRangedAttackMob, IC
 		int i = 0;
 		while(par1NBTTagCompound.hasKey("Friend" + i) && !(par1NBTTagCompound.getString("Friend" + i).isEmpty()))
 		{
-			//System.out.println(i);
 			this.friendlist.add(par1NBTTagCompound.getString("Friend" + i));
 			++i;
 		}
-		//System.out.println("Friend List " + this.friendlist);
     }
     @Override
     protected void dropEquipment(boolean par1, int par2){}
@@ -266,7 +245,6 @@ public class EntityPlayerGhost extends EntityMob implements IRangedAttackMob, IC
     {
     	if(this.spawner.equalsIgnoreCase(GhostManager.playername))
     	{
-    		//System.out.println("remove");
     		setDead();
     	}
 	}
