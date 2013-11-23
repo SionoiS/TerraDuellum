@@ -30,11 +30,8 @@ public class TileEntityDungeon extends TileEntity
         if (!this.worldObj.isRemote)
         {   
         	this.tierModifier = this.getBlockMetadata() + 1;
-        	//System.out.println("this tier ? "+ this.tierModifier);
         	int prisonRange = (TerraDuellum.baseDungeonRange * this.tierModifier);
         	int bedcheckRange = (-((TerraDuellum.baseDungeonRange - TerraDuellum.baseBedCheckRange) * this.tierModifier));
-        	//System.out.println("Dungeon Range ? "+ prisonRange);
-        	//System.out.println("Bed Range ? "+ bedcheckRange);
         	
             AxisAlignedBB prisonrange = AxisAlignedBB.getAABBPool().getAABB(this.xCoord, this.yCoord, this.zCoord, (this.xCoord + 1), (this.yCoord + 1), (this.zCoord + 1)).expand(prisonRange, prisonRange, prisonRange);
             prisonrange.maxY = (double)this.worldObj.getHeight();
@@ -47,7 +44,6 @@ public class TileEntityDungeon extends TileEntity
             while (iterator.hasNext())
             {
                 entityplayer = (EntityPlayer)iterator.next();
-                //System.out.println("EntityPlayer is alive ? = "+ entityplayer.isEntityAlive());
                 
                 if(!entityplayer.isEntityAlive())
                 {
@@ -59,13 +55,11 @@ public class TileEntityDungeon extends TileEntity
 
                 		if (!bedrange.intersectsWith(bed))
                 		{
-                			//System.out.println("Spawn Point Set");
                 			entityplayer.setSpawnChunk(new ChunkCoordinates(this.xCoord, this.yCoord + 2, this.zCoord), true, 0);
                 		}
                 	}
                 	else
                 	{
-                		//System.out.println("Spawn Point Set");
                 		entityplayer.setSpawnChunk(new ChunkCoordinates(this.xCoord, this.yCoord + 2, this.zCoord), true, 0);
                 	}
                 }
