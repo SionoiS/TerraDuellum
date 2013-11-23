@@ -31,8 +31,6 @@ public class GhostManager extends TFC.Core.Player.PlayerTracker
 	    	
 	    	Status prop = (Status) playermp.getExtendedProperties(Status.EXT_PROP_NAME);
 	    	prop.turnGhostOff(playermp);
-	    	
-			//System.out.println(this.playername + " Friend List = " + this.friendlist);
 			
 	    	AxisAlignedBB axisalignedbb = AxisAlignedBB.getAABBPool().getAABB((double)playermp.posX, (double)playermp.posY, (double)playermp.posZ, (double)(playermp.posX + 1), (double)(playermp.posY + 1), (double)(playermp.posZ + 1)).expand(30, 30, 30);
 	    	axisalignedbb.maxY = (double)playermp.worldObj.getHeight();
@@ -56,9 +54,6 @@ public class GhostManager extends TFC.Core.Player.PlayerTracker
 			
 			Status prop = (Status) playermp.getExtendedProperties(Status.EXT_PROP_NAME);
 			this.friendlist = prop.getFriendList(playermp);
-			
-			//System.out.println(this.playername + " Friend List = " + this.friendlist);
-			//System.out.println("For player " + playermp.username + " is ghost on ? " + prop.isGhostOn(playermp));
 			
 	    	if (prop.isGhostOn(playermp))
 	    	{
