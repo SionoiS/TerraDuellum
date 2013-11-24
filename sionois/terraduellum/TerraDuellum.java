@@ -125,8 +125,8 @@ public class TerraDuellum
             
             /**Ranges*/
             
-            this.baseDungeonRange = config.get("Dungeon", "Area Of Effect ?", 30).getInt(30);
-            this.baseBedCheckRange = config.get("Bed Check", "Area Of Effect ?", 10).getInt(10);
+            this.baseDungeonRange = config.get("Dungeon", "Area Of Effect ?", 15).getInt(15);
+            this.baseBedCheckRange = config.get("Bed Check", "Area Of Effect ?", 5).getInt(5);
             
             if (config != null)
             {
