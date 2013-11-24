@@ -11,6 +11,7 @@ import sionois.terraduellum.TileEntities.TileEntityDungeon;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
@@ -60,7 +61,7 @@ public class BlockDungeon extends BlockTerra implements ITileEntityProvider
 		}
     }
     public void onBlockAdded(World par1World, int par2, int par3, int par4)
-    {  		
+    {  	
     	int dungeonCounter = 0;
         int dungeonRange = (TerraDuellum.baseDungeonRange * 8);
         	

@@ -15,6 +15,8 @@ import TFC.Entities.EntityProjectileTFC;
 import TFC.Items.Tools.ItemCustomBow;
 import TFC.Items.Tools.ItemCustomSword;
 import TFC.Items.Tools.ItemJavelin;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.EnchantmentThorns;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
@@ -29,32 +31,31 @@ import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.monster.EntityGolem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-public class EntityPlayerGhost extends EntityMob implements IRangedAttackMob, ICausesDamage
+public class EntityPlayerGhost extends EntityGolem implements IRangedAttackMob, ICausesDamage
 {
-	/**AttackRange don't seem to work for more that 16.0F*/
-	private static final float arrowAttackRange = 20.0F;
-	private static final float watchRange = 20.0F;
-	
+	/**AttackRange*/
+	private static final float arrowAttackRange = 25.0F;	
 	/**Projectile Speed*/
 	private static final float force = 1.6F;
 	/**Projectile Accuracy*/	
 	private static final float forceVariation = 4.0F;
 	/**Mob speed*/
-	private static final double speed = 0.55D;
+	private static final double speed = 0.6D;
 	/**Mob Health*/
 	private static final float maxHealth = 1000;
 	
     private EntityAIArrowAttack aiArrowAttack = new EntityAIArrowAttack(this, 0.0D, 20, 60, this.arrowAttackRange);
     private EntityAIArrowAttack aiJavelinAttack = new EntityAIArrowAttack(this, 0.0D, 20, 120, this.arrowAttackRange);
-    private EntityAIAttackOnCollide aiAttackOnCollide = new EntityAIAttackOnCollide(this, EntityPlayer.class, this.speed, false);
+    private EntityAIAttackOnCollide aiAttackOnCollide = new EntityAIAttackOnCollide(this, this.speed, false);
     
     private String spawner;
     private EntityPlayer player;
@@ -66,12 +67,12 @@ public class EntityPlayerGhost extends EntityMob implements IRangedAttackMob, IC
         
     public EntityPlayerGhost(World par1World)
     {
-        super(par1World);	    	
+        super(par1World);
         this.tasks.addTask(0, new EntityAISwimming(this));
-        this.tasks.addTask(3, new EntityAIWatchClosest(this, EntityPlayer.class, this.watchRange));
+        this.tasks.addTask(3, new EntityAIWatchClosest(this, EntityPlayer.class, this.arrowAttackRange));
         this.tasks.addTask(3, new EntityAILookIdle(this));
         this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
-        this.targetTasks.addTask(2, new EntityAINearestAttackableHostilePlayer(this, EntityPlayer.class, 0, true, false, null));
+        this.targetTasks.addTask(2, new EntityAINearestAttackableHostilePlayer(this, false, false));
     }
     @Override
     public boolean isAIEnabled()
@@ -83,43 +84,34 @@ public class EntityPlayerGhost extends EntityMob implements IRangedAttackMob, IC
 	{
 		super.applyEntityAttributes();
 		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(this.maxHealth);
-		this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setAttribute(10.0F);
-		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(this.speed);
+		this.getEntityAttribute(SharedMonsterAttributes.followRange).setAttribute(this.arrowAttackRange);
+		this.getAttributeMap().func_111150_b(SharedMonsterAttributes.attackDamage).setAttribute(10F);
 	}
     private void addPlayerArmor()
     {   
-    	ItemStack itemstack0 = player.getCurrentItemOrArmor(0);
-    	ItemStack itemstack1 = player.getCurrentItemOrArmor(1);
-    	ItemStack itemstack2 = player.getCurrentItemOrArmor(2);
-    	ItemStack itemstack3 = player.getCurrentItemOrArmor(3);
-    	ItemStack itemstack4 = player.getCurrentItemOrArmor(4);
-    	if(itemstack0 != null)
+    	ItemStack[] itemstack = this.player.getLastActiveItems();
+    	ItemStack itemheld = this.player.getHeldItem();
+    	int i = 0;
+    	
+    	while(i <= 3)
     	{
-		this.setCurrentItemOrArmor(0, itemstack0);
+    		if(itemstack[i] != null)
+    		{
+    			this.setCurrentItemOrArmor(i+1, itemstack[i]);
+    		}
+    		i++;
     	}
-		if(itemstack1 != null)
-		{
-        this.setCurrentItemOrArmor(1, itemstack1);
-		}
-		if(itemstack2 != null)
-		{
-        this.setCurrentItemOrArmor(2, itemstack2);
-		}
-		if(itemstack3 != null)
-		{
-        this.setCurrentItemOrArmor(3, itemstack3);
-		}
-		if(itemstack4 != null)
-		{
-        this.setCurrentItemOrArmor(4, itemstack4);
-		}
+    	if(itemheld != null)
+    	{
+    		this.setCurrentItemOrArmor(0, itemheld);
+    	}
     }
 	public void setCombatTask()
 	{
 		this.tasks.removeTask(this.aiAttackOnCollide);
 		this.tasks.removeTask(this.aiArrowAttack);
 		this.tasks.removeTask(this.aiJavelinAttack);
-    		ItemStack itemstack = this.getHeldItem();
+    	ItemStack itemstack = this.getHeldItem();
     		
 		if (itemstack != null)
 		{    
@@ -135,6 +127,48 @@ public class EntityPlayerGhost extends EntityMob implements IRangedAttackMob, IC
 		}
         else this.tasks.addTask(2, this.aiAttackOnCollide);	
 	}
+    protected Entity findPlayerToAttack()
+    {
+        EntityPlayer entityplayer = this.worldObj.getClosestVulnerablePlayerToEntity(this, this.arrowAttackRange);
+        return entityplayer != null && this.canEntityBeSeen(entityplayer) ? entityplayer : null;
+    }
+    public boolean attackEntityAsMob(Entity par1Entity)
+    {
+        float f = (float)this.getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue();
+        int i = 0;
+
+        if (par1Entity instanceof EntityLivingBase)
+        {
+            f += EnchantmentHelper.getEnchantmentModifierLiving(this, (EntityLivingBase)par1Entity);
+            i += EnchantmentHelper.getKnockbackModifier(this, (EntityLivingBase)par1Entity);
+        }
+
+        boolean flag = par1Entity.attackEntityFrom(DamageSource.causeMobDamage(this), f);
+
+        if (flag)
+        {
+            if (i > 0)
+            {
+                par1Entity.addVelocity((double)(-MathHelper.sin(this.rotationYaw * (float)Math.PI / 180.0F) * (float)i * 0.5F), 0.1D, (double)(MathHelper.cos(this.rotationYaw * (float)Math.PI / 180.0F) * (float)i * 0.5F));
+                this.motionX *= 0.6D;
+                this.motionZ *= 0.6D;
+            }
+
+            int j = EnchantmentHelper.getFireAspectModifier(this);
+
+            if (j > 0)
+            {
+                par1Entity.setFire(j * 4);
+            }
+
+            if (par1Entity instanceof EntityLivingBase)
+            {
+                EnchantmentThorns.func_92096_a(this, (EntityLivingBase)par1Entity, this.rand);
+            }
+        }
+
+        return flag;
+    }
 	@Override
     public EntityLivingData onSpawnWithEgg(EntityLivingData par1EntityLivingData)
     {
@@ -150,7 +184,7 @@ public class EntityPlayerGhost extends EntityMob implements IRangedAttackMob, IC
     	
     	this.addPlayerArmor();
     	
-   	this.homeX = MathHelper.floor_double(this.player.posX);
+    	this.homeX = MathHelper.floor_double(this.player.posX);
     	this.homeY = MathHelper.floor_double(this.player.posY);
     	this.homeZ = MathHelper.floor_double(this.player.posZ);
     	this.setHomeArea(this.homeX, this.homeY, this.homeZ, 15);
@@ -159,13 +193,15 @@ public class EntityPlayerGhost extends EntityMob implements IRangedAttackMob, IC
     }
 	@Override
     protected void updateAITick()
-    { 
+    {
+		if(this.aiTime <= 20)
+		{
     	++this.aiTime;
-    	
+		}
     	if(this.aiTime == 20)
     	{
     		this.setHomeArea(this.homeX, this.homeY, this.homeZ, 15);
-    		this.tasks.addTask(1, new EntityAIMoveTowardsRestriction(this, this.speed + 0.1D));
+    		this.tasks.addTask(1, new EntityAIMoveTowardsRestriction(this, this.speed));
     		this.setCombatTask();
     	}
     }
@@ -186,7 +222,7 @@ public class EntityPlayerGhost extends EntityMob implements IRangedAttackMob, IC
     }
     @Override
     public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
-    {   
+    {
         super.writeEntityToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setString("Player", spawner);
         par1NBTTagCompound.setInteger("HomeXCoords", homeX);
@@ -236,11 +272,6 @@ public class EntityPlayerGhost extends EntityMob implements IRangedAttackMob, IC
     }
     @Override
     protected void dropEquipment(boolean par1, int par2){}
-    @Override
-    protected boolean canDespawn()
-    {
-        return false;
-    }
     public void remove()
     {
     	if(this.spawner.equalsIgnoreCase(GhostManager.playername))
@@ -248,6 +279,10 @@ public class EntityPlayerGhost extends EntityMob implements IRangedAttackMob, IC
     		setDead();
     	}
 	}
+    public boolean allowLeashing()
+    {
+        return false;
+    }
 	@Override
 	public void attackEntityWithRangedAttack(EntityLivingBase par1EntityLiving,float par2) 
 	{
