@@ -29,9 +29,13 @@ import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
+import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.monster.EntityCreeper;
+import net.minecraft.entity.monster.EntityGhast;
 import net.minecraft.entity.monster.EntityGolem;
+import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -43,7 +47,7 @@ import net.minecraft.world.World;
 public class EntityPlayerGhost extends EntityGolem implements IRangedAttackMob, ICausesDamage
 {
 	/**AttackRange*/
-	private static final float arrowAttackRange = 25.0F;	
+	public static final float arrowAttackRange = 25.0F;	
 	/**Projectile Speed*/
 	private static final float force = 1.6F;
 	/**Projectile Accuracy*/	
@@ -51,12 +55,12 @@ public class EntityPlayerGhost extends EntityGolem implements IRangedAttackMob, 
 	/**Mob speed*/
 	private static final double speed = 0.6D;
 	/**Mob Health*/
-	private static final float maxHealth = 1000;
+	private static final float health = 1000;
 	
     private EntityAIArrowAttack aiArrowAttack = new EntityAIArrowAttack(this, 0.0D, 20, 60, this.arrowAttackRange);
     private EntityAIArrowAttack aiJavelinAttack = new EntityAIArrowAttack(this, 0.0D, 20, 120, this.arrowAttackRange);
-    private EntityAIAttackOnCollide aiAttackOnCollide = new EntityAIAttackOnCollide(this, this.speed, false);
-    
+    private EntityAIAttackOnCollide aiAttackOnCollide = new EntityAIAttackOnCollide(this, this.speed, true);
+
     private String spawner;
     private EntityPlayer player;
     private int homeX;
@@ -66,14 +70,17 @@ public class EntityPlayerGhost extends EntityGolem implements IRangedAttackMob, 
     public ArrayList friendlist = new ArrayList();
         
     public EntityPlayerGhost(World par1World)
-    {
+    {  	
         super(par1World);
+        this.getNavigator().setAvoidsWater(true);
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(3, new EntityAIWatchClosest(this, EntityPlayer.class, this.arrowAttackRange));
         this.tasks.addTask(3, new EntityAILookIdle(this));
         this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
-        this.targetTasks.addTask(2, new EntityAINearestAttackableHostilePlayer(this, false, false));
-    }
+        this.targetTasks.addTask(2, new EntityAINearestAttackableHostilePlayer(this, true, false));
+        
+        //System.out.println("AI");
+    } 
     @Override
     public boolean isAIEnabled()
     {
@@ -81,11 +88,13 @@ public class EntityPlayerGhost extends EntityGolem implements IRangedAttackMob, 
     }
     @Override
 	protected void applyEntityAttributes()
-	{
+	{	
 		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(this.maxHealth);
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(this.health);
 		this.getEntityAttribute(SharedMonsterAttributes.followRange).setAttribute(this.arrowAttackRange);
 		this.getAttributeMap().func_111150_b(SharedMonsterAttributes.attackDamage).setAttribute(10F);
+		
+		//System.out.println("applyEntityAttributes");
 	}
     private void addPlayerArmor()
     {   
@@ -127,11 +136,7 @@ public class EntityPlayerGhost extends EntityGolem implements IRangedAttackMob, 
 		}
         else this.tasks.addTask(2, this.aiAttackOnCollide);	
 	}
-    protected Entity findPlayerToAttack()
-    {
-        EntityPlayer entityplayer = this.worldObj.getClosestVulnerablePlayerToEntity(this, this.arrowAttackRange);
-        return entityplayer != null && this.canEntityBeSeen(entityplayer) ? entityplayer : null;
-    }
+	@Override
     public boolean attackEntityAsMob(Entity par1Entity)
     {
         float f = (float)this.getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue();
@@ -174,26 +179,28 @@ public class EntityPlayerGhost extends EntityGolem implements IRangedAttackMob, 
     {
     	par1EntityLivingData = super.onSpawnWithEgg(par1EntityLivingData);
     	
-    	this.spawner = GhostManager.playername;
+    	this.spawner = GhostManager.player.username;
     	this.setCustomNameTag(this.spawner);
     	this.setAlwaysRenderNameTag(true);
     	
     	this.player = GhostManager.player;
-    	
-    	this.friendlist = GhostManager.friendlist;
-    	
+    	this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(this.player.getHealth());
     	this.addPlayerArmor();
+
+    	this.friendlist = GhostManager.friendlist;
     	
     	this.homeX = MathHelper.floor_double(this.player.posX);
     	this.homeY = MathHelper.floor_double(this.player.posY);
     	this.homeZ = MathHelper.floor_double(this.player.posZ);
     	this.setHomeArea(this.homeX, this.homeY, this.homeZ, 15);
     	
+    	//System.out.println("onSpawnWithEgg");
+    	
     	return par1EntityLivingData;
     }
 	@Override
     protected void updateAITick()
-    {
+    {	
 		if(this.aiTime <= 20)
 		{
     	++this.aiTime;
@@ -203,7 +210,14 @@ public class EntityPlayerGhost extends EntityGolem implements IRangedAttackMob, 
     		this.setHomeArea(this.homeX, this.homeY, this.homeZ, 15);
     		this.tasks.addTask(1, new EntityAIMoveTowardsRestriction(this, this.speed));
     		this.setCombatTask();
+    		
+    		//System.out.println("updateAITick");
     	}
+    }
+    public void onLivingUpdate()
+    {
+        this.updateArmSwingProgress();
+        super.onLivingUpdate();
     }
 	@Override
     protected void onDeathUpdate()
@@ -240,6 +254,8 @@ public class EntityPlayerGhost extends EntityGolem implements IRangedAttackMob, 
 				iterator.next();
 			}
 		}
+		
+		//System.out.println("writeEntityToNBT");
     }
     @Override
 	public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
@@ -269,12 +285,14 @@ public class EntityPlayerGhost extends EntityGolem implements IRangedAttackMob, 
 			this.friendlist.add(par1NBTTagCompound.getString("Friend" + i));
 			++i;
 		}
+		
+		//System.out.println("readEntityFromNBT");
     }
     @Override
     protected void dropEquipment(boolean par1, int par2){}
     public void remove()
     {
-    	if(this.spawner.equalsIgnoreCase(GhostManager.playername))
+    	if(this.spawner.equalsIgnoreCase(GhostManager.player.username))
     	{
     		setDead();
     	}

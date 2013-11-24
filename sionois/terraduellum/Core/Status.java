@@ -14,13 +14,13 @@ public class Status implements IExtendedEntityProperties
 {
 	public final static String EXT_PROP_NAME = "Status";
 	private final EntityPlayer player;
-	public int ghoststatus;
+	public boolean isGhostOn;
 	public ArrayList friendlist = new ArrayList();
 	
 	public Status(EntityPlayer player)
 	{
 		this.player = player;
-		this.ghoststatus = 0;
+		this.isGhostOn = false;
 	}
 	private static String getSaveKey(EntityPlayer player)
 	{
@@ -57,7 +57,7 @@ public class Status implements IExtendedEntityProperties
 	public void loadNBTData(NBTTagCompound par1NBTTagCompound)
 	{
 			NBTTagCompound status = par1NBTTagCompound.getCompoundTag(EXT_PROP_NAME);
-			this.ghoststatus = status.getInteger("GhostStatus");
+			this.isGhostOn = (status.getBoolean("GhostStatus"));
 			
 			int i = 0;
 			while(!(status.getString("Friend" + i).isEmpty()))
@@ -70,7 +70,7 @@ public class Status implements IExtendedEntityProperties
 	public void saveNBTData(NBTTagCompound par1NBTTagCompound)
 	{
 		NBTTagCompound status = new NBTTagCompound();
-		status.setInteger("GhostStatus", this.ghoststatus);
+		status.setBoolean("GhostStatus", this.isGhostOn);
 		
 		if (this.friendlist != null && !this.friendlist.isEmpty())
 		{
@@ -85,27 +85,6 @@ public class Status implements IExtendedEntityProperties
 			
 			par1NBTTagCompound.setCompoundTag(EXT_PROP_NAME, status);				
 		}				
-	}
-	public void turnGhostOn(EntityPlayer player)
-	{
-		this.ghoststatus = 1;
-	}
-	public void turnGhostOff(EntityPlayer player)
-	{
-		this.ghoststatus = 0;
-	}
-	public boolean isGhostOn(EntityPlayer player)
-	{
-		if(this.ghoststatus == 1)
-		{
-			return true;
-		}
-		else 
-			return false;
-	}
-	public ArrayList getFriendList(EntityPlayer player)
-	{
-		return this.friendlist;
 	}
 }
 

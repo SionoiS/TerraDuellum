@@ -97,10 +97,10 @@ public class TerraDuellum
     			config = new Configuration(new File(TerraFirmaCraft.proxy.getMinecraftDir(), "/config/TerraDuellum.cfg"));
     			config.load();
     		} catch (Exception e) {
-    			System.out.println(new StringBuilder().append("[TD] Error while trying to access configuration !").toString());
+    			System.out.println(new StringBuilder().append("[TerraDuellum] Error while trying to access configuration !").toString());
     			config = null;
     		}
-    		System.out.println(new StringBuilder().append("[TD] Loading Config").toString());
+    		System.out.println(new StringBuilder().append("[TerraDuellum] Loading Config").toString());
     		
     		/**Blocks*/
     		TDBlocks.dungeonBlockID = config.getBlock(TDBlocks.dungeonBlockName + " ID", 2120).getInt(2120);

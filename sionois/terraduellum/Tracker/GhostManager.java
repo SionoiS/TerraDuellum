@@ -18,7 +18,6 @@ import net.minecraft.world.World;
 
 public class GhostManager extends TFC.Core.Player.PlayerTracker
 {
-	public static String playername;
 	public static EntityPlayer player;
 	public static ArrayList friendlist;
 	
@@ -27,10 +26,9 @@ public class GhostManager extends TFC.Core.Player.PlayerTracker
 		if(!playermp.worldObj.isRemote)
 		{
 	    	player = playermp;
-	    	playername = playermp.username;
 	    	
 	    	Status prop = (Status) playermp.getExtendedProperties(Status.EXT_PROP_NAME);
-	    	prop.turnGhostOff(playermp);
+	    	prop.isGhostOn = false;
 			
 	    	AxisAlignedBB axisalignedbb = AxisAlignedBB.getAABBPool().getAABB((double)playermp.posX, (double)playermp.posY, (double)playermp.posZ, (double)(playermp.posX + 1), (double)(playermp.posY + 1), (double)(playermp.posZ + 1)).expand(30, 30, 30);
 	    	axisalignedbb.maxY = (double)playermp.worldObj.getHeight();
@@ -50,12 +48,11 @@ public class GhostManager extends TFC.Core.Player.PlayerTracker
 		if(!playermp.worldObj.isRemote)
 		{
 			player = playermp;
-			playername = playermp.username;
 			
 			Status prop = (Status) playermp.getExtendedProperties(Status.EXT_PROP_NAME);
-			this.friendlist = prop.getFriendList(playermp);
+			this.friendlist = prop.friendlist;
 			
-	    	if (prop.isGhostOn(playermp))
+	    	if (prop.isGhostOn)
 	    	{
 	    		World world = playermp.worldObj;
 	    		Entity entity = EntityList.createEntityByName("PlayerGhost",world);
