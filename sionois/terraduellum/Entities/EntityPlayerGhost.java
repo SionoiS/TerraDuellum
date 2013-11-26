@@ -1,10 +1,15 @@
 package sionois.terraduellum.Entities;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 import cpw.mods.fml.relauncher.SideOnly;
+import sionois.terraduellum.TDItems;
 import sionois.terraduellum.AI.EntityAINearestAttackableHostilePlayer;
+import sionois.terraduellum.AI.EntityAIOpenTFCDoor;
 import sionois.terraduellum.Tracker.GhostManager;
 import TFC.TFCItems;
 import TFC.API.ICausesDamage;
@@ -30,6 +35,7 @@ import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
+import net.minecraft.entity.ai.EntityAIOpenDoor;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityCreeper;
@@ -46,7 +52,7 @@ import net.minecraft.world.World;
 
 public class EntityPlayerGhost extends EntityGolem implements IRangedAttackMob, ICausesDamage
 {
-	/**AttackRange*/
+	/**Attack Range*/
 	public static final float arrowAttackRange = 25.0F;	
 	/**Projectile Speed*/
 	private static final float force = 1.6F;
@@ -73,11 +79,13 @@ public class EntityPlayerGhost extends EntityGolem implements IRangedAttackMob, 
     {  	
         super(par1World);
         this.getNavigator().setAvoidsWater(true);
+        this.getNavigator().setBreakDoors(true);
         this.tasks.addTask(0, new EntityAISwimming(this));
-        this.tasks.addTask(3, new EntityAIWatchClosest(this, EntityPlayer.class, this.arrowAttackRange));
-        this.tasks.addTask(3, new EntityAILookIdle(this));
-        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
-        this.targetTasks.addTask(2, new EntityAINearestAttackableHostilePlayer(this, true, false));
+        this.tasks.addTask(1, new EntityAIOpenTFCDoor(this, false));
+        this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityPlayer.class, this.arrowAttackRange));
+        this.tasks.addTask(4, new EntityAILookIdle(this));
+        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
+        this.targetTasks.addTask(2, new EntityAINearestAttackableHostilePlayer(this, true, true));
         
         //System.out.println("AI");
     } 
@@ -126,15 +134,15 @@ public class EntityPlayerGhost extends EntityGolem implements IRangedAttackMob, 
 		{    
 			if(itemstack.itemID == Item.bow.itemID)
 			{
-				this.tasks.addTask(2, this.aiArrowAttack);
+				this.tasks.addTask(3, this.aiArrowAttack);
 			}
 			if (itemstack.getItem() instanceof ItemJavelin)
 			{
-				this.tasks.addTask(2, this.aiJavelinAttack);
+				this.tasks.addTask(3, this.aiJavelinAttack);
 			}
-			else this.tasks.addTask(2, this.aiAttackOnCollide);
+			else this.tasks.addTask(3, this.aiAttackOnCollide);
 		}
-        else this.tasks.addTask(2, this.aiAttackOnCollide);	
+        else this.tasks.addTask(3, this.aiAttackOnCollide);	
 	}
 	@Override
     public boolean attackEntityAsMob(Entity par1Entity)
@@ -208,7 +216,7 @@ public class EntityPlayerGhost extends EntityGolem implements IRangedAttackMob, 
     	if(this.aiTime == 20)
     	{
     		this.setHomeArea(this.homeX, this.homeY, this.homeZ, 15);
-    		this.tasks.addTask(1, new EntityAIMoveTowardsRestriction(this, this.speed));
+    		this.tasks.addTask(2, new EntityAIMoveTowardsRestriction(this, this.speed));
     		this.setCombatTask();
     		
     		//System.out.println("updateAITick");
@@ -301,6 +309,11 @@ public class EntityPlayerGhost extends EntityGolem implements IRangedAttackMob, 
     {
         return false;
     }
+    
+    protected boolean canDespawn()
+    {
+        return false;
+    }
 	@Override
 	public void attackEntityWithRangedAttack(EntityLivingBase par1EntityLiving,float par2) 
 	{
@@ -339,9 +352,13 @@ public class EntityPlayerGhost extends EntityGolem implements IRangedAttackMob, 
 			{
 				return EnumDamageType.PIERCING;
 			}
-			else if ((itemstack.getItem() == TFCItems.BismuthBronzeMace) || (itemstack.getItem() == TFCItems.BlackBronzeMace) || (itemstack.getItem() == TFCItems.BlackSteelMace) || (itemstack.getItem() == TFCItems.BlueSteelMace) || (itemstack.getItem() == TFCItems.BronzeMace) || (itemstack.getItem() == TFCItems.CopperMace) || (itemstack.getItem() == TFCItems.RedSteelMace) || (itemstack.getItem() == TFCItems.SteelMace) || (itemstack.getItem() == TFCItems.WroughtIronMace))
+			else if (TDItems.Maces.contains(itemstack.getItem()))
 			{
 				return EnumDamageType.CRUSHING;
+			}
+			else if (TDItems.Knives.contains(itemstack.getItem()))
+			{
+				return EnumDamageType.PIERCING;
 			}
 			else return EnumDamageType.SLASHING;
 		}
