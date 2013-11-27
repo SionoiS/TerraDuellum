@@ -9,7 +9,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.src.ModLoader;
 import sionois.terraduellum.Core.Status;
-import sionois.terraduellum.Entities.EntityPlayerGhost;
+import sionois.terraduellum.Entities.EntityMeleeGhost;
+import sionois.terraduellum.Entities.EntityRangedGhost;
 import sionois.terraduellum.TileEntities.TileEntityDungeon;
 
 public class CommonProxy {
@@ -20,7 +21,8 @@ public class CommonProxy {
 	{
 		ModLoader.registerTileEntity(TileEntityDungeon.class, "Dungeon");
 		
-    	EntityRegistry.registerGlobalEntityID(EntityPlayerGhost.class, "PlayerGhost", ModLoader.getUniqueEntityId(), 0xffffff, 0xaaaaaa);
+    	EntityRegistry.registerGlobalEntityID(EntityMeleeGhost.class, "MeleeGhost", ModLoader.getUniqueEntityId());
+    	EntityRegistry.registerGlobalEntityID(EntityRangedGhost.class, "RangedGhost", ModLoader.getUniqueEntityId());
 	}
 	
 	public void registerRenderInformation() {}
