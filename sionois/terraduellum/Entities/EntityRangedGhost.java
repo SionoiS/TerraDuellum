@@ -39,14 +39,14 @@ public class EntityRangedGhost extends EntityPlayerGhost
             this.setCombatTask();
         }
         
-        System.out.println("AI Ranged Ghost");
+        //System.out.println("AI Ranged Ghost");
     }
     /**
      * sets this entity's combat AI.
      */
     protected void setCombatTask()
     {
-    	System.out.println("setCombatTask");
+    	//System.out.println("setCombatTask");
     	
     	this.tasks.removeTask(this.aiJavelinAttack);
         this.tasks.removeTask(this.aiArrowAttack);
@@ -57,12 +57,12 @@ public class EntityRangedGhost extends EntityPlayerGhost
         {
         	if (itemstack.getItem() instanceof ItemJavelin)
         	{
-        		System.out.println("aiJavelinAttack");
+        		//System.out.println("aiJavelinAttack");
         		this.tasks.addTask(2, this.aiJavelinAttack);
         	}
         	else
         	{
-        		System.out.println("aiArrowAttack");
+        		//System.out.println("aiArrowAttack");
         		this.tasks.addTask(2, this.aiArrowAttack);
         	}  
         }

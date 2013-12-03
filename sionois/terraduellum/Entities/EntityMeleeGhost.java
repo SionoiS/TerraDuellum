@@ -84,11 +84,11 @@ public class EntityMeleeGhost extends EntityPlayerGhost
 		
 		if(itemstack != null)
 		{
-			if (TDItems.Maces.contains(itemstack.getItem()))
+			if (TDItems.Maces.contains(itemstack.itemID))
 			{
 				return EnumDamageType.CRUSHING;
 			}
-			else if (TDItems.Knives.contains(itemstack.getItem()))
+			else if (TDItems.Knives.contains(itemstack.itemID))
 			{
 				return EnumDamageType.PIERCING;
 			}

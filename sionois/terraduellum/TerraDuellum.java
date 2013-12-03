@@ -43,7 +43,7 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-@Mod(modid=ModRef.ModID, name=ModRef.ModName, version=ModRef.ModVersion ,  dependencies = "after:Terrafirmacraft")
+@Mod(modid=ModRef.ModID, name=ModRef.ModName, version=ModRef.ModVersion ,  dependencies = ModRef.ModDependencies)
 @NetworkMod(clientSideRequired = true, serverSideRequired = true)
 public class TerraDuellum
 { 

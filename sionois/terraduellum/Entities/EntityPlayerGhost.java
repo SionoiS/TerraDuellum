@@ -19,7 +19,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-public class EntityPlayerGhost extends EntityGolem implements IRangedAttackMob, ICausesDamage
+public abstract class EntityPlayerGhost extends EntityGolem implements IRangedAttackMob, ICausesDamage
 {
 	/**Attack Range*/
 	public static final float arrowAttackRange = 25.0F;	
@@ -104,7 +104,7 @@ public class EntityPlayerGhost extends EntityGolem implements IRangedAttackMob, 
     	this.homeZ = MathHelper.floor_double(this.creator.posZ);
     	this.setHomeArea(this.homeX, this.homeY, this.homeZ, 15);
     	
-    	System.out.println("onSpawnWithEgg");
+    	//System.out.println("onSpawnWithEgg");
     	//System.out.println("Home = " + this.getHomePosition().posX + " " + this.getHomePosition().posZ);
     	//System.out.println("Friend List = " + this.friendlist);
     	
@@ -184,7 +184,7 @@ public class EntityPlayerGhost extends EntityGolem implements IRangedAttackMob, 
 			++i;
 		}
 		this.setHomeArea(this.homeX, this.homeY, this.homeZ, 15);
-		System.out.println("readEntityFromNBT");
+		//System.out.println("readEntityFromNBT");
 		//System.out.println("Home = " + this.getHomePosition().posX + " " + this.getHomePosition().posZ);
 		//System.out.println("Friend List = " + this.friendlist);
     }

@@ -13,27 +13,27 @@ import net.minecraft.item.Item;
 
 public class TDItems
 {	
-	public static final Set<Item> Maces = new HashSet<Item>(Arrays.asList(
-			TFCItems.CopperMace, 
-			TFCItems.BronzeMace, 
-			TFCItems.BismuthBronzeMace, 
-			TFCItems.BlackBronzeMace, 
-			TFCItems.WroughtIronMace, 
-			TFCItems.SteelMace, 
-			TFCItems.BlackSteelMace, 
-			TFCItems.RedSteelMace, 
-			TFCItems.BlueSteelMace));
+	public static final Set<Integer> Maces = new HashSet<Integer>(Arrays.asList(
+			TFCItems.CopperMace.itemID, 
+			TFCItems.BronzeMace.itemID, 
+			TFCItems.BismuthBronzeMace.itemID, 
+			TFCItems.BlackBronzeMace.itemID, 
+			TFCItems.WroughtIronMace.itemID, 
+			TFCItems.SteelMace.itemID, 
+			TFCItems.BlackSteelMace.itemID, 
+			TFCItems.RedSteelMace.itemID, 
+			TFCItems.BlueSteelMace.itemID));
 	
-	public static final Set<Item> Knives = new HashSet<Item>(Arrays.asList(
-			TFCItems.CopperKnife, 
-			TFCItems.BronzeKnife, 
-			TFCItems.BismuthBronzeKnife, 
-			TFCItems.BlackBronzeKnife, 
-			TFCItems.WroughtIronKnife, 
-			TFCItems.SteelKnife, 
-			TFCItems.BlackSteelKnife, 
-			TFCItems.RedSteelKnife, 
-			TFCItems.BlueSteelKnife));
+	public static final Set<Integer> Knives = new HashSet<Integer>(Arrays.asList(
+			TFCItems.CopperKnife.itemID, 
+			TFCItems.BronzeKnife.itemID, 
+			TFCItems.BismuthBronzeKnife.itemID, 
+			TFCItems.BlackBronzeKnife.itemID, 
+			TFCItems.WroughtIronKnife.itemID, 
+			TFCItems.SteelKnife.itemID, 
+			TFCItems.BlackSteelKnife.itemID, 
+			TFCItems.RedSteelKnife.itemID, 
+			TFCItems.BlueSteelKnife.itemID));
 	
 	public static final Set<Integer> DoorsId = new HashSet<Integer>(Arrays.asList(
 			2041, 2042, 2043, 2044, 2045, 2046, 2047, 2048,
