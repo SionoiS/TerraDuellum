@@ -1,11 +1,8 @@
 package sionois.terraduellum;
 
-import TFC.TFCBlocks;
-import TFC.API.Constant.TFCBlockID;
-import TFC.Blocks.Terrain.BlockIgExBrick;
-import TFC.Blocks.Terrain.BlockIgInBrick;
-import TFC.Blocks.Terrain.BlockMMBrick;
-import TFC.Blocks.Terrain.BlockSedBrick;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraftforge.common.MinecraftForge;
 import sionois.terraduellum.Blocks.BlockDungeon;
 import sionois.terraduellum.Blocks.BlockIgExBlock;
 import sionois.terraduellum.Blocks.BlockIgInBlock;
@@ -14,10 +11,6 @@ import sionois.terraduellum.Blocks.BlockSedBlock;
 import sionois.terraduellum.Blocks.BlockSteelDoor;
 import sionois.terraduellum.Blocks.BlockWroughtIronDoor;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraftforge.common.MinecraftForge;
 
 public class TDBlocks
 {

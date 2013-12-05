@@ -2,33 +2,13 @@ package sionois.terraduellum;
 
 import java.io.File;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.item.Item;
-import net.minecraft.src.ModLoader;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
-import sionois.terraduellum.Blocks.BlockWroughtIronDoor;
-import sionois.terraduellum.Blocks.BlockSteelDoor;
 import sionois.terraduellum.Commands.FriendsListCommand;
 import sionois.terraduellum.Commands.SetGhostOnOffCommand;
-import sionois.terraduellum.Entities.EntityPlayerGhost;
-import sionois.terraduellum.TileEntities.TileEntityDungeon;
 import sionois.terraduellum.Handlers.StatusHandler;
-import TFC.Reference;
 import TFC.TerraFirmaCraft;
-import TFC.API.Constant.TFCBlockID;
-import TFC.API.Constant.TFCItemID;
-import TFC.Core.Player.PlayerTracker;
 import TFC.Core.Util.Localization;
-import TFC.Handlers.AnvilCraftingHandler;
-import TFC.Handlers.ChunkDataEventHandler;
-import TFC.Handlers.ChunkEventHandler;
-import TFC.Handlers.EnteringChunkHandler;
-import TFC.Handlers.EntityDamageHandler;
-import TFC.Handlers.EntityLivingHandler;
-import TFC.Handlers.EntitySpawnHandler;
-import TFC.Handlers.PlayerTossEventHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -38,12 +18,9 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkMod;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 
-@Mod(modid=ModRef.ModID, name=ModRef.ModName, version=ModRef.ModVersion ,  dependencies = "after:Terrafirmacraft")
+@Mod(modid=ModRef.ModID, name=ModRef.ModName, version=ModRef.ModVersion ,  dependencies = ModRef.ModDependencies)
 @NetworkMod(clientSideRequired = true, serverSideRequired = true)
 public class TerraDuellum
 { 
@@ -97,10 +74,10 @@ public class TerraDuellum
     			config = new Configuration(new File(TerraFirmaCraft.proxy.getMinecraftDir(), "/config/TerraDuellum.cfg"));
     			config.load();
     		} catch (Exception e) {
-    			System.out.println(new StringBuilder().append("[TD] Error while trying to access configuration !").toString());
+    			System.out.println(new StringBuilder().append("[TerraDuellum] Error while trying to access configuration !").toString());
     			config = null;
     		}
-    		System.out.println(new StringBuilder().append("[TD] Loading Config").toString());
+    		System.out.println(new StringBuilder().append("[TerraDuellum] Loading Config").toString());
     		
     		/**Blocks*/
     		TDBlocks.dungeonBlockID = config.getBlock(TDBlocks.dungeonBlockName + " ID", 2120).getInt(2120);
@@ -125,8 +102,8 @@ public class TerraDuellum
             
             /**Ranges*/
             
-            this.baseDungeonRange = config.get("Dungeon", "Area Of Effect ?", 30).getInt(30);
-            this.baseBedCheckRange = config.get("Bed Check", "Area Of Effect ?", 10).getInt(10);
+            this.baseDungeonRange = config.get("Dungeon", "Area Of Effect ?", 15).getInt(15);
+            this.baseBedCheckRange = config.get("Bed Check", "Area Of Effect ?", 5).getInt(5);
             
             if (config != null)
             {

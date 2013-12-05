@@ -3,75 +3,43 @@ package sionois.terraduellum.Entities;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import cpw.mods.fml.relauncher.SideOnly;
-import sionois.terraduellum.AI.EntityAINearestAttackableHostilePlayer;
-import sionois.terraduellum.Tracker.GhostManager;
-import TFC.TFCItems;
-import TFC.API.ICausesDamage;
-import TFC.API.IProjectile;
-import TFC.API.Enums.EnumDamageType;
-import TFC.Entities.EntityJavelin;
-import TFC.Entities.EntityProjectileTFC;
-import TFC.Items.Tools.ItemCustomBow;
-import TFC.Items.Tools.ItemCustomSword;
-import TFC.Items.Tools.ItemJavelin;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EntityLivingData;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIArrowAttack;
-import net.minecraft.entity.ai.EntityAIAttackOnCollide;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.monster.EntityGolem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import sionois.terraduellum.Core.Status;
+import TFC.API.ICausesDamage;
+import TFC.API.Enums.EnumDamageType;
 
-public class EntityPlayerGhost extends EntityMob implements IRangedAttackMob, ICausesDamage
+public abstract class EntityPlayerGhost extends EntityGolem implements IRangedAttackMob, ICausesDamage
 {
-	/**AttackRange don't seem to work for more that 16.0F*/
-	private static final float arrowAttackRange = 20.0F;
-	private static final float watchRange = 20.0F;
-	
+	/**Attack Range*/
+	public static final float arrowAttackRange = 25.0F;	
 	/**Projectile Speed*/
-	private static final float force = 1.6F;
+	protected static final float force = 1.6F;
 	/**Projectile Accuracy*/	
-	private static final float forceVariation = 4.0F;
+	protected static final float forceVariation = 4.0F;
 	/**Mob speed*/
-	private static final double speed = 0.55D;
+	protected static final double speed = 0.6D;
 	/**Mob Health*/
-	private static final float maxHealth = 1000;
+	protected static final float health = 1000;
 	
-    private EntityAIArrowAttack aiArrowAttack = new EntityAIArrowAttack(this, 0.0D, 20, 60, this.arrowAttackRange);
-    private EntityAIArrowAttack aiJavelinAttack = new EntityAIArrowAttack(this, 0.0D, 20, 120, this.arrowAttackRange);
-    private EntityAIAttackOnCollide aiAttackOnCollide = new EntityAIAttackOnCollide(this, EntityPlayer.class, this.speed, false);
-    
-    private String spawner;
-    private EntityPlayer player;
+	public ArrayList friendlist = new ArrayList();
+	private String creatorname;
+    private EntityPlayer creator;
     private int homeX;
     private int homeY;
     private int homeZ;
-    private int aiTime = 0;
-    public ArrayList friendlist = new ArrayList();
         
     public EntityPlayerGhost(World par1World)
-    {
-        super(par1World);	    	
-        this.tasks.addTask(0, new EntityAISwimming(this));
-        this.tasks.addTask(3, new EntityAIWatchClosest(this, EntityPlayer.class, this.watchRange));
-        this.tasks.addTask(3, new EntityAILookIdle(this));
-        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
-        this.targetTasks.addTask(2, new EntityAINearestAttackableHostilePlayer(this, EntityPlayer.class, 0, true, false, null));
+    {  	
+        super(par1World);
     }
     @Override
     public boolean isAIEnabled()
@@ -80,94 +48,70 @@ public class EntityPlayerGhost extends EntityMob implements IRangedAttackMob, IC
     }
     @Override
 	protected void applyEntityAttributes()
-	{
+	{	
 		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(this.maxHealth);
-		this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setAttribute(10.0F);
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(this.health);
+		this.getEntityAttribute(SharedMonsterAttributes.followRange).setAttribute(this.arrowAttackRange);
 		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(this.speed);
+		this.getAttributeMap().func_111150_b(SharedMonsterAttributes.attackDamage).setAttribute(10F);
+		
+		//System.out.println("applyEntityAttributes");
 	}
-    private void addPlayerArmor()
-    {   
-    	ItemStack itemstack0 = player.getCurrentItemOrArmor(0);
-    	ItemStack itemstack1 = player.getCurrentItemOrArmor(1);
-    	ItemStack itemstack2 = player.getCurrentItemOrArmor(2);
-    	ItemStack itemstack3 = player.getCurrentItemOrArmor(3);
-    	ItemStack itemstack4 = player.getCurrentItemOrArmor(4);
-    	if(itemstack0 != null)
+    protected void addPlayerArmor()
+    {
+    	ItemStack[] itemstack = this.creator.getLastActiveItems();
+    	ItemStack itemheld = this.creator.getHeldItem();
+    	int i = 0;
+    	
+    	while(i <= 3)
     	{
-		this.setCurrentItemOrArmor(0, itemstack0);
+    		if(itemstack[i] != null)
+    		{
+    			this.setCurrentItemOrArmor(i+1, itemstack[i]);
+    		}
+    		i++;
     	}
-		if(itemstack1 != null)
-		{
-        this.setCurrentItemOrArmor(1, itemstack1);
-		}
-		if(itemstack2 != null)
-		{
-        this.setCurrentItemOrArmor(2, itemstack2);
-		}
-		if(itemstack3 != null)
-		{
-        this.setCurrentItemOrArmor(3, itemstack3);
-		}
-		if(itemstack4 != null)
-		{
-        this.setCurrentItemOrArmor(4, itemstack4);
-		}
+    	if(itemheld != null)
+    	{
+    		this.setCurrentItemOrArmor(0, itemheld);
+    	}
     }
-	public void setCombatTask()
+	public void setPlayer(EntityPlayer entityplayer)
 	{
-		this.tasks.removeTask(this.aiAttackOnCollide);
-		this.tasks.removeTask(this.aiArrowAttack);
-		this.tasks.removeTask(this.aiJavelinAttack);
-    		ItemStack itemstack = this.getHeldItem();
-    		
-		if (itemstack != null)
-		{    
-			if(itemstack.itemID == Item.bow.itemID)
-			{
-				this.tasks.addTask(2, this.aiArrowAttack);
-			}
-			if (itemstack.getItem() instanceof ItemJavelin)
-			{
-				this.tasks.addTask(2, this.aiJavelinAttack);
-			}
-			else this.tasks.addTask(2, this.aiAttackOnCollide);
-		}
-        else this.tasks.addTask(2, this.aiAttackOnCollide);	
+		this.creator = entityplayer;
+		//System.out.println("setPlayer");
 	}
 	@Override
     public EntityLivingData onSpawnWithEgg(EntityLivingData par1EntityLivingData)
     {
     	par1EntityLivingData = super.onSpawnWithEgg(par1EntityLivingData);
-    	
-    	this.spawner = GhostManager.playername;
-    	this.setCustomNameTag(this.spawner);
+
+    	this.creatorname = this.creator.username;
+    	this.setCustomNameTag(this.creatorname);
     	this.setAlwaysRenderNameTag(true);
     	
-    	this.player = GhostManager.player;
-    	
-    	this.friendlist = GhostManager.friendlist;
+    	this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(this.creator.getHealth());
     	
     	this.addPlayerArmor();
     	
-   	this.homeX = MathHelper.floor_double(this.player.posX);
-    	this.homeY = MathHelper.floor_double(this.player.posY);
-    	this.homeZ = MathHelper.floor_double(this.player.posZ);
+    	Status status = (Status) creator.getExtendedProperties(Status.EXT_PROP_NAME);
+    	this.friendlist = status.friendlist;
+
+    	this.homeX = MathHelper.floor_double(this.creator.posX);
+    	this.homeY = MathHelper.floor_double(this.creator.posY);
+    	this.homeZ = MathHelper.floor_double(this.creator.posZ);
     	this.setHomeArea(this.homeX, this.homeY, this.homeZ, 15);
+    	
+    	//System.out.println("onSpawnWithEgg");
+    	//System.out.println("Home = " + this.getHomePosition().posX + " " + this.getHomePosition().posZ);
+    	//System.out.println("Friend List = " + this.friendlist);
     	
     	return par1EntityLivingData;
     }
-	@Override
-    protected void updateAITick()
-    { 
-    	++this.aiTime;
-    	
-    	if(this.aiTime == 20)
-    	{
-    		this.setHomeArea(this.homeX, this.homeY, this.homeZ, 15);
-    		this.tasks.addTask(1, new EntityAIMoveTowardsRestriction(this, this.speed + 0.1D));
-    		this.setCombatTask();
-    	}
+    public void onLivingUpdate()
+    {
+        this.updateArmSwingProgress();
+        super.onLivingUpdate();
     }
 	@Override
     protected void onDeathUpdate()
@@ -186,12 +130,12 @@ public class EntityPlayerGhost extends EntityMob implements IRangedAttackMob, IC
     }
     @Override
     public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
-    {   
+    {
         super.writeEntityToNBT(par1NBTTagCompound);
-        par1NBTTagCompound.setString("Player", spawner);
-        par1NBTTagCompound.setInteger("HomeXCoords", homeX);
-        par1NBTTagCompound.setInteger("HomeYCoords", homeY);
-        par1NBTTagCompound.setInteger("HomeZCoords", homeZ);
+        par1NBTTagCompound.setString("Player", this.creatorname);
+        par1NBTTagCompound.setInteger("HomeXCoords", this.homeX);
+        par1NBTTagCompound.setInteger("HomeYCoords", this.homeY);
+        par1NBTTagCompound.setInteger("HomeZCoords", this.homeZ);
         
 		if (this.friendlist != null && !this.friendlist.isEmpty())
 		{			
@@ -204,6 +148,10 @@ public class EntityPlayerGhost extends EntityMob implements IRangedAttackMob, IC
 				iterator.next();
 			}
 		}
+		
+		//System.out.println("writeEntityToNBT");
+		//System.out.println("Home = " + this.getHomePosition().posX + " " + this.getHomePosition().posZ);
+		//System.out.println("Friend List = " + this.friendlist);
     }
     @Override
 	public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
@@ -212,7 +160,7 @@ public class EntityPlayerGhost extends EntityMob implements IRangedAttackMob, IC
 		
         if(par1NBTTagCompound.hasKey("Player"))
         {       	
-        	this.spawner = par1NBTTagCompound.getString("Player");
+        	this.creatorname = par1NBTTagCompound.getString("Player");
         }
         if(par1NBTTagCompound.hasKey("HomeXCoords"))
         {
@@ -233,65 +181,34 @@ public class EntityPlayerGhost extends EntityMob implements IRangedAttackMob, IC
 			this.friendlist.add(par1NBTTagCompound.getString("Friend" + i));
 			++i;
 		}
+		this.setHomeArea(this.homeX, this.homeY, this.homeZ, 15);
+		//System.out.println("readEntityFromNBT");
+		//System.out.println("Home = " + this.getHomePosition().posX + " " + this.getHomePosition().posZ);
+		//System.out.println("Friend List = " + this.friendlist);
     }
     @Override
     protected void dropEquipment(boolean par1, int par2){}
-    @Override
-    protected boolean canDespawn()
+    public void remove(String playername)
     {
-        return false;
-    }
-    public void remove()
-    {
-    	if(this.spawner.equalsIgnoreCase(GhostManager.playername))
+    	if(this.creatorname.equalsIgnoreCase(playername))
     	{
     		setDead();
     	}
 	}
+    public boolean allowLeashing()
+    {
+        return false;
+    }
+    
+    protected boolean canDespawn()
+    {
+        return false;
+    }
 	@Override
-	public void attackEntityWithRangedAttack(EntityLivingBase par1EntityLiving,float par2) 
+	public void attackEntityWithRangedAttack(EntityLivingBase par1EntityLiving,float par2){}
+	@Override
+	public EnumDamageType GetDamageType()
 	{
-		EntityProjectileTFC projectile = null;
-		ItemStack itemstack = this.getHeldItem();
-		
-		if(itemstack!= null)
-		{
-			if(itemstack.getItem() instanceof IProjectile)
-			{
-				projectile = new EntityJavelin(this.worldObj, this, par1EntityLiving, this.force - 0.1F, this.forceVariation, itemstack.getItem().itemID);
-				double dam = ((IProjectile)itemstack.getItem()).getRangedDamage();
-				projectile.setDamage(dam);
-			}
-			else if (itemstack.itemID == Item.bow.itemID)
-			{
-				projectile = new EntityProjectileTFC(this.worldObj, this, par1EntityLiving, this.force, this.forceVariation - 2.0F, Item.arrow.itemID);
-				projectile.setDamage(65.0);
-			}
-		}
-	
-		if(projectile != null)
-		{
-			this.worldObj.playSoundAtEntity(this, "random.bow", 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
-			this.worldObj.spawnEntityInWorld(projectile);
-		}
-	}
-	@Override
-	public EnumDamageType GetDamageType() 
-	{	
-		ItemStack itemstack = this.getHeldItem();
-		
-		if(itemstack != null)
-		{
-			if (itemstack.getItem() instanceof IProjectile || itemstack.getItem() == ItemCustomBow.bow)
-			{
-				return EnumDamageType.PIERCING;
-			}
-			else if ((itemstack.getItem() == TFCItems.BismuthBronzeMace) || (itemstack.getItem() == TFCItems.BlackBronzeMace) || (itemstack.getItem() == TFCItems.BlackSteelMace) || (itemstack.getItem() == TFCItems.BlueSteelMace) || (itemstack.getItem() == TFCItems.BronzeMace) || (itemstack.getItem() == TFCItems.CopperMace) || (itemstack.getItem() == TFCItems.RedSteelMace) || (itemstack.getItem() == TFCItems.SteelMace) || (itemstack.getItem() == TFCItems.WroughtIronMace))
-			{
-				return EnumDamageType.CRUSHING;
-			}
-			else return EnumDamageType.SLASHING;
-		}
-		else return EnumDamageType.SLASHING;
+		return null;
 	}
 }

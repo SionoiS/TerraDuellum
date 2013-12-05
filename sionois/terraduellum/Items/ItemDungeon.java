@@ -1,7 +1,7 @@
 package sionois.terraduellum.Items;
 
-import sionois.terraduellum.Blocks.BlockDungeon;
 import net.minecraft.creativetab.CreativeTabs;
+import sionois.terraduellum.Blocks.BlockDungeon;
 import TFC.API.Enums.EnumSize;
 import TFC.API.Enums.EnumWeight;
 import TFC.Items.ItemBlocks.ItemTerraBlock;

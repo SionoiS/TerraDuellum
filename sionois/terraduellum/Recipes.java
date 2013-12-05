@@ -1,11 +1,11 @@
 package sionois.terraduellum;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.src.ModLoader;
 import TFC.TFCBlocks;
 import TFC.TFCItems;
 import TFC.API.Constant.Global;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class Recipes 
 {

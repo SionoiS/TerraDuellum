@@ -1,7 +1,7 @@
 package sionois.terraduellum;
 
-
-import sionois.terraduellum.Entities.EntityPlayerGhost;
+import sionois.terraduellum.Entities.EntityMeleeGhost;
+import sionois.terraduellum.Entities.EntityRangedGhost;
 import sionois.terraduellum.Render.RenderPlayerGhost;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
@@ -13,6 +13,7 @@ public class ClientProxy extends CommonProxy
 	@SideOnly(Side.CLIENT)
     public void registerRenderInformation() 
 	{
-		RenderingRegistry.registerEntityRenderingHandler(EntityPlayerGhost.class, new RenderPlayerGhost());
+		RenderingRegistry.registerEntityRenderingHandler(EntityMeleeGhost.class, new RenderPlayerGhost());
+		RenderingRegistry.registerEntityRenderingHandler(EntityRangedGhost.class, new RenderPlayerGhost());
     }
 }

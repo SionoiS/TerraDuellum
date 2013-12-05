@@ -1,20 +1,14 @@
 package sionois.terraduellum.Render;
 
-import org.lwjgl.opengl.GL11;
-
-import sionois.terraduellum.Entities.EntityPlayerGhost;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.monster.EntityPigZombie;
-import net.minecraft.entity.monster.EntityZombie;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import sionois.terraduellum.Entities.EntityPlayerGhost;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-
 
 @SideOnly(Side.CLIENT)
 public class RenderPlayerGhost extends RenderBiped
