@@ -1,16 +1,9 @@
 package sionois.terraduellum.Entities;
 
-import TFC.API.Enums.EnumDamageType;
-import sionois.terraduellum.TDItems;
-import sionois.terraduellum.AI.EntityAINearestAttackableHostilePlayer;
-import sionois.terraduellum.AI.EntityAIOpenTFCDoor;
-import sionois.terraduellum.Core.Status;
-import sionois.terraduellum.Tracker.GhostManager;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentThorns;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.EntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
@@ -23,6 +16,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import sionois.terraduellum.TDItems;
+import sionois.terraduellum.AI.EntityAINearestAttackableHostilePlayer;
+import TFC.API.Enums.EnumDamageType;
 
 public class EntityMeleeGhost extends EntityPlayerGhost
 {	    

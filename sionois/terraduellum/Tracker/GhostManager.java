@@ -3,13 +3,9 @@ package sionois.terraduellum.Tracker;
 import java.util.Iterator;
 import java.util.List;
 
-import TFC.Items.Tools.ItemJavelin;
-import sionois.terraduellum.Core.Status;
-import sionois.terraduellum.Entities.EntityPlayerGhost;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EntityLivingData;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -17,6 +13,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import sionois.terraduellum.Core.Status;
+import sionois.terraduellum.Entities.EntityPlayerGhost;
+import TFC.Items.Tools.ItemJavelin;
 
 public class GhostManager extends TFC.Core.Player.PlayerTracker
 {
@@ -52,7 +51,7 @@ public class GhostManager extends TFC.Core.Player.PlayerTracker
    		
 	    		ItemStack itemstack = playermp.getHeldItem();
 	    		
-	    		if(itemstack.getItem() instanceof ItemJavelin | itemstack.itemID == Item.bow.itemID)
+	    		if(itemstack != null && (itemstack.getItem() instanceof ItemJavelin || itemstack.itemID == Item.bow.itemID))
 	    		{
 	    			Entity entity1 = EntityList.createEntityByName("RangedGhost",world);
 	    			//System.out.println("Spawn Ranged Ghost");

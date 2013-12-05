@@ -3,15 +3,12 @@ package sionois.terraduellum;
 import java.util.HashMap;
 import java.util.Map;
 
-import TFC.TerraFirmaCraft;
-import cpw.mods.fml.common.registry.EntityRegistry;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.src.ModLoader;
-import sionois.terraduellum.Core.Status;
 import sionois.terraduellum.Entities.EntityMeleeGhost;
 import sionois.terraduellum.Entities.EntityRangedGhost;
 import sionois.terraduellum.TileEntities.TileEntityDungeon;
+import cpw.mods.fml.common.registry.EntityRegistry;
 
 public class CommonProxy {
 

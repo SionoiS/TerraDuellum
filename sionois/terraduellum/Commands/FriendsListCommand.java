@@ -1,15 +1,11 @@
 package sionois.terraduellum.Commands;
 
-import java.util.List;
-
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.command.PlayerNotFoundException;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.EnumGameType;
 import sionois.terraduellum.Core.Status;
-import sionois.terraduellum.Tracker.GhostManager;
 
 public class FriendsListCommand extends CommandBase
 {
@@ -57,7 +53,7 @@ public class FriendsListCommand extends CommandBase
 				}
 			}
 			
-			if(astring.length == 1 && astring[0].equalsIgnoreCase("list"))
+			if(astring.length == 1 & astring[0].equalsIgnoreCase("list"))
 			{
 				Status prop = (Status) entityplayer.getExtendedProperties(Status.EXT_PROP_NAME);
 				entityplayer.addChatMessage("Friend List = " + prop.friendlist);

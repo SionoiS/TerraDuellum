@@ -1,10 +1,5 @@
 package sionois.terraduellum.Items;
 
-import sionois.terraduellum.ModRef;
-import sionois.terraduellum.TDBlocks;
-import TFC.API.Enums.EnumSize;
-import TFC.API.Enums.EnumWeight;
-import TFC.Items.ItemTerra;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -12,6 +7,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import sionois.terraduellum.ModRef;
+import sionois.terraduellum.TDBlocks;
+import TFC.API.Enums.EnumSize;
+import TFC.API.Enums.EnumWeight;
+import TFC.Items.ItemTerra;
 
 public class ItemDoorWroughtIron extends ItemTerra
 {

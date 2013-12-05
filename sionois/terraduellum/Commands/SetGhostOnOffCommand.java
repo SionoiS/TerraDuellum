@@ -1,17 +1,11 @@
 package sionois.terraduellum.Commands;
 
-import java.util.List;
-
-import sionois.terraduellum.Core.Status;
 import net.minecraft.command.CommandBase;
-import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.command.PlayerNotFoundException;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.EnumGameType;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldSettings;
+import sionois.terraduellum.Core.Status;
 
 public class SetGhostOnOffCommand extends CommandBase
 {
@@ -40,7 +34,7 @@ public class SetGhostOnOffCommand extends CommandBase
 	{
 		EntityPlayer entityplayer = getCommandSenderAsPlayer(sender);
 		
-		if (astring.length == 1 && !entityplayer.worldObj.isRemote)
+		if (!entityplayer.worldObj.isRemote && astring.length == 1)
 		{
 			if(astring[0].equalsIgnoreCase("off"))
 			{

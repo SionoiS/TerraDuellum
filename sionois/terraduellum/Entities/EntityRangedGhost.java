@@ -1,6 +1,5 @@
 package sionois.terraduellum.Entities;
 
-import sionois.terraduellum.AI.EntityAINearestAttackableHostilePlayer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIArrowAttack;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
@@ -13,6 +12,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import sionois.terraduellum.AI.EntityAINearestAttackableHostilePlayer;
 import TFC.API.IProjectile;
 import TFC.API.Enums.EnumDamageType;
 import TFC.Entities.EntityJavelin;

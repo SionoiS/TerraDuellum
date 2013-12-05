@@ -3,12 +3,12 @@ package sionois.terraduellum.Core;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import sionois.terraduellum.CommonProxy;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
+import sionois.terraduellum.CommonProxy;
 
 public class Status implements IExtendedEntityProperties
 {

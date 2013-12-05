@@ -2,33 +2,13 @@ package sionois.terraduellum;
 
 import java.io.File;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.item.Item;
-import net.minecraft.src.ModLoader;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
-import sionois.terraduellum.Blocks.BlockWroughtIronDoor;
-import sionois.terraduellum.Blocks.BlockSteelDoor;
 import sionois.terraduellum.Commands.FriendsListCommand;
 import sionois.terraduellum.Commands.SetGhostOnOffCommand;
-import sionois.terraduellum.Entities.EntityPlayerGhost;
-import sionois.terraduellum.TileEntities.TileEntityDungeon;
 import sionois.terraduellum.Handlers.StatusHandler;
-import TFC.Reference;
 import TFC.TerraFirmaCraft;
-import TFC.API.Constant.TFCBlockID;
-import TFC.API.Constant.TFCItemID;
-import TFC.Core.Player.PlayerTracker;
 import TFC.Core.Util.Localization;
-import TFC.Handlers.AnvilCraftingHandler;
-import TFC.Handlers.ChunkDataEventHandler;
-import TFC.Handlers.ChunkEventHandler;
-import TFC.Handlers.EnteringChunkHandler;
-import TFC.Handlers.EntityDamageHandler;
-import TFC.Handlers.EntityLivingHandler;
-import TFC.Handlers.EntitySpawnHandler;
-import TFC.Handlers.PlayerTossEventHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -38,10 +18,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkMod;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 
 @Mod(modid=ModRef.ModID, name=ModRef.ModName, version=ModRef.ModVersion ,  dependencies = ModRef.ModDependencies)
 @NetworkMod(clientSideRequired = true, serverSideRequired = true)

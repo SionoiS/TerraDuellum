@@ -2,15 +2,12 @@ package sionois.terraduellum.Blocks;
 
 import java.util.Random;
 
-import TFC.Core.Recipes;
+import net.minecraft.block.BlockDoor;
+import net.minecraft.block.material.Material;
+import net.minecraft.world.World;
 import sionois.terraduellum.TDItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.BlockDoor;
-import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
-import net.minecraft.world.World;
 
 public class BlockSteelDoor extends BlockDoor
 {

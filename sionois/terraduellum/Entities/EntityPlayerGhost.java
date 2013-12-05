@@ -3,11 +3,6 @@ package sionois.terraduellum.Entities;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import sionois.terraduellum.Core.Status;
-import sionois.terraduellum.Tracker.GhostManager;
-import TFC.API.ICausesDamage;
-import TFC.API.Enums.EnumDamageType;
-import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EntityLivingData;
 import net.minecraft.entity.IRangedAttackMob;
@@ -18,6 +13,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import sionois.terraduellum.Core.Status;
+import TFC.API.ICausesDamage;
+import TFC.API.Enums.EnumDamageType;
 
 public abstract class EntityPlayerGhost extends EntityGolem implements IRangedAttackMob, ICausesDamage
 {

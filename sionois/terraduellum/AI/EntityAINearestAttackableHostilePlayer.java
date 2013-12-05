@@ -3,12 +3,11 @@ package sionois.terraduellum.AI;
 import java.util.Collections;
 import java.util.List;
 
-import sionois.terraduellum.Entities.EntityPlayerGhost;
-import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAINearestAttackableTargetSorter;
 import net.minecraft.entity.ai.EntityAITarget;
 import net.minecraft.entity.player.EntityPlayer;
+import sionois.terraduellum.Entities.EntityPlayerGhost;
 
 public class EntityAINearestAttackableHostilePlayer extends EntityAITarget
 {

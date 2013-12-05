@@ -1,6 +1,5 @@
 package sionois.terraduellum;
 
-
 import sionois.terraduellum.Entities.EntityMeleeGhost;
 import sionois.terraduellum.Entities.EntityRangedGhost;
 import sionois.terraduellum.Render.RenderPlayerGhost;

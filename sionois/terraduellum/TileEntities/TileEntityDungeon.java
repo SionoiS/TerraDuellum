@@ -3,12 +3,11 @@ package sionois.terraduellum.TileEntities;
 import java.util.Iterator;
 import java.util.List;
 
-import sionois.terraduellum.TDBlocks;
-import sionois.terraduellum.TerraDuellum;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChunkCoordinates;
+import sionois.terraduellum.TerraDuellum;
 
 public class TileEntityDungeon extends TileEntity
 {

@@ -1,13 +1,11 @@
 package sionois.terraduellum.Handlers;
 
-import sionois.terraduellum.TerraDuellum;
-import sionois.terraduellum.Core.Status;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import sionois.terraduellum.Core.Status;
 
 public class StatusHandler {
 	@ForgeSubscribe

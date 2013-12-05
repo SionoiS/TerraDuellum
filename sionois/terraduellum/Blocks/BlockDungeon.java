@@ -2,22 +2,20 @@ package sionois.terraduellum.Blocks;
 
 import java.util.List;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import sionois.terraduellum.ModRef;
-import sionois.terraduellum.TDBlocks;
-import sionois.terraduellum.TerraDuellum;
-import sionois.terraduellum.TileEntities.TileEntityDungeon;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
-import TFC.Reference;
+import sionois.terraduellum.ModRef;
+import sionois.terraduellum.TDBlocks;
+import sionois.terraduellum.TerraDuellum;
+import sionois.terraduellum.TileEntities.TileEntityDungeon;
 import TFC.Blocks.BlockTerra;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockDungeon extends BlockTerra implements ITileEntityProvider
 {

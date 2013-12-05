@@ -4,12 +4,11 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import TFC.TFCItems;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
+import net.minecraft.item.Item;
 import sionois.terraduellum.Items.ItemDoorSteel;
 import sionois.terraduellum.Items.ItemDoorWroughtIron;
-import net.minecraft.item.Item;
+import TFC.TFCItems;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class TDItems
 {	
