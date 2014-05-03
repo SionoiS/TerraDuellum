@@ -1,6 +1,7 @@
 package sionois.terraduellum.Items;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemStack;
 import sionois.terraduellum.Blocks.BlockDungeon;
 import TFC.API.Enums.EnumSize;
 import TFC.API.Enums.EnumWeight;
@@ -16,12 +17,12 @@ public class ItemDungeon extends ItemTerraBlock
 		this.setCreativeTab(CreativeTabs.tabMisc);
 	}
 	@Override
-	public EnumSize getSize()
+	public EnumSize getSize(ItemStack is)
 	{
 		return EnumSize.HUGE;
 	}
 	@Override
-	public EnumWeight getWeight()
+	public EnumWeight getWeight(ItemStack is)
 	{
 		return EnumWeight.HEAVY;
 	}

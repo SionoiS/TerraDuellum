@@ -109,11 +109,11 @@ public class ItemDoorWroughtIron extends ItemTerra
         par0World.notifyBlocksOfNeighborChange(par1, par2, par3, par5Block.blockID);
         par0World.notifyBlocksOfNeighborChange(par1, par2 + 1, par3, par5Block.blockID);
     }
-    public EnumSize getSize()
+    public EnumSize getSize(ItemStack is)
     {
 		return EnumSize.HUGE;
 	}
-    public EnumWeight getWeight()
+    public EnumWeight getWeight(ItemStack is)
 	{
 		return EnumWeight.HEAVY;
 	}

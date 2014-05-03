@@ -42,21 +42,21 @@ public class FriendsListCommand extends CommandBase
 				{
 					Status prop = (Status) entityplayer.getExtendedProperties(Status.EXT_PROP_NAME);
 					prop.friendlist.add(astring[1]);
-					entityplayer.addChatMessage("Player " + astring[1] + " is now friendly");
+					entityplayer.addChatMessage("§aPlayer " + astring[1] + "§a is now friendly");
 				}
 				
 				if(astring[0].equalsIgnoreCase("remove") && astring[1] != null)
 				{
 					Status prop = (Status) entityplayer.getExtendedProperties(Status.EXT_PROP_NAME);
 					prop.friendlist.remove(astring[1]);
-					entityplayer.addChatMessage("Player " + astring[1] + " is now hostile");
+					entityplayer.addChatMessage("§cPlayer " + astring[1] + "§c is now hostile");
 				}
 			}
 			
 			if(astring.length == 1 & astring[0].equalsIgnoreCase("list"))
 			{
 				Status prop = (Status) entityplayer.getExtendedProperties(Status.EXT_PROP_NAME);
-				entityplayer.addChatMessage("Friend List = " + prop.friendlist);
+				entityplayer.addChatMessage("§9Friend List = " + prop.friendlist);
 			}
 		}
 	}
