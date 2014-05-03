@@ -4,11 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.src.ModLoader;
 import sionois.terraduellum.Entities.EntityMeleeGhost;
 import sionois.terraduellum.Entities.EntityRangedGhost;
 import sionois.terraduellum.TileEntities.TileEntityDungeon;
 import cpw.mods.fml.common.registry.EntityRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class CommonProxy {
 
@@ -16,10 +16,10 @@ public class CommonProxy {
 
 	public void registerTileEntities() 
 	{
-		ModLoader.registerTileEntity(TileEntityDungeon.class, "Dungeon");
+		GameRegistry.registerTileEntity(TileEntityDungeon.class, "Dungeon");
 		
-    	EntityRegistry.registerGlobalEntityID(EntityMeleeGhost.class, "MeleeGhost", ModLoader.getUniqueEntityId());
-    	EntityRegistry.registerGlobalEntityID(EntityRangedGhost.class, "RangedGhost", ModLoader.getUniqueEntityId());
+    	EntityRegistry.registerGlobalEntityID(EntityMeleeGhost.class, "MeleeGhost", EntityRegistry.findGlobalUniqueEntityId());
+    	EntityRegistry.registerGlobalEntityID(EntityRangedGhost.class, "RangedGhost", EntityRegistry.findGlobalUniqueEntityId());
 	}
 	
 	public void registerRenderInformation() {}
