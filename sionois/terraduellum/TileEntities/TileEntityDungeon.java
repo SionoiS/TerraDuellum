@@ -76,12 +76,12 @@ public class TileEntityDungeon extends TileEntity
 
                 		if (!bedrange.intersectsWith(bed))
                 		{
-                			entityplayer.addChatMessage("§cProtected zone ! If you die here you will be trapped !");
+                			entityplayer.addChatMessage("Protected zone ! If you die here you will be trapped !");
                 		}
                 	}
                 	else
                 	{
-                		entityplayer.addChatMessage("§cProtected zone ! If you die here you will be trapped !");
+                		entityplayer.addChatMessage("Protected zone ! If you die here you will be trapped !");
                 	}
                 	
                 }
